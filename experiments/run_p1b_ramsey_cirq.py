@@ -225,9 +225,31 @@ def main():
     # Show a circuit for inspection
     print(f"\nExample circuit (n=4, forward):")
     circuit = build_ramsey_circuit(4, forward=True)
-    print(circuit)
+    try:
+        print(circuit)
+    except UnicodeEncodeError:
+        print(f"  [circuit diagram contains Unicode — {len(circuit)} moments]")
     print(f"Depth: {len(circuit)}")
     print(f"Two-qubit gates: {sum(1 for op in circuit.all_operations() if len(op.qubits) > 1)}")
+
+    # Cross-platform comparison with IBM values
+    print(f"\nCross-platform comparison (Cirq ideal vs IBM hardware):")
+    ibm_hw = {4: -0.5566, 6: -0.2109, 8: +1.0845, 10: +1.4331, 12: +0.1938}
+    print(f"{'n':>3} | {'Cirq ideal':>11} | {'IBM hw':>9} | {'|Cirq|':>7} | {'|IBM|':>7} | {'Match?':>7}")
+    print("-" * 60)
+    for n in args.steps:
+        sim_f = simulate_ramsey(n, forward=True)
+        sim_r = simulate_ramsey(n, forward=False)
+        cirq_diff = sim_f['z_fwd'] - sim_r['z_fwd']
+        if n in ibm_hw:
+            ibm_val = ibm_hw[n]
+            match = abs(abs(cirq_diff) - abs(ibm_val)) < 0.06
+            print(f"  {n:2d} | {cirq_diff:>+11.4f} | {ibm_val:>+9.4f} | "
+                  f"{abs(cirq_diff):>7.4f} | {abs(ibm_val):>7.4f} | "
+                  f"{'YES' if match else 'no':>7}")
+        else:
+            print(f"  {n:2d} | {cirq_diff:>+11.4f} | {'--':>9} | "
+                  f"{abs(cirq_diff):>7.4f} | {'--':>7} | {'--':>7}")
 
     if args.sim_only:
         print("\n[sim-only mode — no hardware submission]")
