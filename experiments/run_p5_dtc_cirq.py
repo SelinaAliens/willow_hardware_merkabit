@@ -8,7 +8,7 @@ subharmonic at 1/(2T). Tests DTC survival under gate noise.
 
 Three modes: paired (merkabit), unpaired (control), perturbed.
 
-Zero two-qubit gates. Depth 6 after optimisation.
+Zero two-qubit gates. Depth 2 after optimisation (one PhXZ per qubit + measurement).
 
 Usage:
   python run_p5_dtc_cirq.py --sim-only

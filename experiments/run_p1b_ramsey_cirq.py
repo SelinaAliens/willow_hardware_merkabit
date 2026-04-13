@@ -10,8 +10,8 @@ Circuit: Ry(pi/2) -> U0_n -> Ry(-pi/2) -> measure
 Forward vs reversed chirality (P sign swap) at each n.
 Berry phase = (delta_fwd - delta_rev) / 2.
 
-Zero two-qubit gates. All single-qubit. Depth 6 after compilation
-(Cirq's optimiser merges consecutive single-qubit gates).
+Zero two-qubit gates. All single-qubit. Depth 2 after compilation
+(Cirq's optimiser merges consecutive single-qubit gates into one PhXZ per qubit).
 
 Usage:
   # Simulation only (no hardware)

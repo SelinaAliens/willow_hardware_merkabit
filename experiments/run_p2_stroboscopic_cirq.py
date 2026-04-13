@@ -6,7 +6,7 @@ P2 Stroboscopic Quasi-Period — Cirq Implementation for Google Hardware
 Measures P(|00>) return probability across n = 1..59 ouroboros steps.
 Predicts quasi-period peak at 3.3T = 39.6 steps.
 
-Zero two-qubit gates. Depth 6 after optimisation.
+Zero two-qubit gates. Depth 2 after optimisation (one PhXZ per qubit + measurement).
 
 Usage:
   python run_p2_stroboscopic_cirq.py --sim-only
