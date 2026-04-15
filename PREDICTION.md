@@ -13,18 +13,21 @@ square-grid quantum hardware at syndrome extraction depth τ ≥ 5.
 
 | Observable | Predicted range | Basis |
 |---|---|---|
-| Fano factor at τ=5, ε=0.10 | F ≈ 0.3–0.7 | Noisy topology simulation |
+| Fano factor at τ=5 (2-qubit, paired) | F ≈ 0.3–0.7 | Noisy topology simulation |
+| Fano factor at τ=5 (2-qubit, control) | F ≈ 1 (near-Poissonian) | Standard decoherence theory |
+| **P4: F(N) scaling, N ∈ {2, 4, 6, 8}** | **F stays sub-Poissonian (< 0.5) across all N** | **Cirq simulation; geometric hypothesis** |
 | DTC ratio (paired/control) | > 3× | IBM cross-architecture result (3.2–3.9× on Eagle+Heron) |
 | P1b Ramsey sign flip | n=6→8 | Angle table (topology-independent) |
 | P2 quasi-period peak | n=39 ± 2 (= 3.25T) | Angle table (topology-independent) |
-| P2 local min (n=13) | P(|00⟩) ≈ 0.709 | Exact match Eagle r3 ↔ Heron r2 |
+| P2 local min (n=13) | P ≈ 0.696 ± 0.05 | Theoretical value; IBM Eagle gave 0.688, Heron gave 0.709 |
 
 ## Falsification conditions
 
 1. **F > 1 at all τ tested** (including τ ≥ 5) would indicate topology-dependence
-2. **DTC ratio < 1.5× (paired/control)** would indicate P gate has no effect on this topology
-3. **No sign flip in P1b Ramsey** would indicate the Berry phase doesn't accumulate correctly
-4. **P2 local min at n=13 differs from 0.709 by > 10%** would indicate the angle table behaves differently on this platform
+2. **F_paired(N) > 0.7 at any N ≥ 4** would falsify the scaling prediction — standard decoherence (F → 1 with N) would then be the correct model
+3. **DTC ratio < 1.5× (paired/control)** would indicate P gate has no effect on this topology
+4. **No sign flip in P1b Ramsey** would indicate the Berry phase doesn't accumulate correctly
+5. **P2 local min at n=13 outside [0.65, 0.75]** would indicate the angle table behaves differently on this platform
 
 ## Evidence base for this prediction
 

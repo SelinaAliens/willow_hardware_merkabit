@@ -39,12 +39,36 @@ At τ = 1 (single round), the hex triangle is sub-Poissonian and the square is n
 
 ## Experiments (pending hardware access)
 
-The `experiments/` directory will contain Cirq implementations of:
-- P1b Ramsey Berry phase (zero 2-qubit gates, depth 6)
-- P2 Stroboscopic quasi-period (zero 2-qubit gates, depth 6)
-- P5 DTC survival with epsilon sweep (zero 2-qubit gates, depth 6)
+The `experiments/` directory contains Cirq implementations of four protocols:
+- **P1b Ramsey Berry phase** (2 qubits, zero 2-qubit gates)
+- **P2 Stroboscopic quasi-period** (1 qubit, zero 2-qubit gates)
+- **P4 Scaling: F(N) vs qubit count** (2, 4, 6, 8 qubits, zero 2-qubit gates)
+- **P5 DTC survival with epsilon sweep** (2 qubits, zero 2-qubit gates)
 
-All three protocols use only Rz and Rx — both native on Google hardware.
+All four protocols use only Rz and Rx (or H) — single-qubit natives on Google hardware.
+After Cirq's single-qubit-merge optimisation, each Floquet cycle compiles to depth 2
+(one PhXZ per qubit).
+
+### P4 scaling — new prediction
+
+Tests whether F_paired stays sub-Poissonian as qubit count scales. Cirq simulation
+with Willow-realistic depolarizing noise (error rate 0.005) gives:
+
+| N (qubits) | F_paired | F_control |
+|---|---|---|
+| 2 | 0.19 | 0.88 |
+| 4 | 0.19 | 0.88 |
+| 6 | 0.19 | 0.90 |
+| 8 | 0.19 | 0.90 |
+
+Standard decoherence theory predicts F → 1 as N grows (independent errors accumulate).
+The merkabit-geometric prediction is that F_paired stays sub-Poissonian — this is the
+direct test of whether the effect is a geometric pathway to coherent computing at scale.
+
+Run it yourself:
+```bash
+python experiments/run_p4_scaling_cirq.py --sim-only --noisy --error-rate 0.005
+```
 
 ## Hardware Requirements
 
