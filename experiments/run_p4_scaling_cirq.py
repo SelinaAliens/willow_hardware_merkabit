@@ -12,13 +12,26 @@ Circuit: N qubits initialized in |+>, then tau Floquet cycles of
 alternating Rz(+phi) and Rz(-phi) assignments across neighbouring qubits,
 followed by computational-basis measurement. Zero two-qubit gates.
 
-Predictions (from Paper 26, Monte Carlo simulation, F at tau=5):
-    N = 2: F ~ 0.4   (matches P1 baseline)
-    N = 4: F in [0.3, 0.4]   (tighter anti-bunching with scale)
-    N = 8: F in [0.25, 0.35]   (approaching the 4x4 sim prediction F ~ 0.285)
-    Scaling law: F(N) monotonically decreases with N at fixed tau
+Predictions (two models, both at tau=5):
 
-Falsification: F(N) non-monotonic, or F(N=8) >= F(N=2) at 3 sigma.
+    PRIMARY (Cirq depolarizing noise, error rate 0.005, Willow-realistic):
+        N = 2: F_paired ~ 0.19,  F_control ~ 0.88
+        N = 4: F_paired ~ 0.19,  F_control ~ 0.88
+        N = 6: F_paired ~ 0.19,  F_control ~ 0.90
+        N = 8: F_paired ~ 0.19,  F_control ~ 0.90
+        Scaling law: F_paired stays flat (sub-Poissonian) as N grows,
+        while F_control approaches 1. Standard decoherence theory predicts
+        F -> 1 with N; the geometric hypothesis predicts F stays constant.
+
+    SECONDARY (Paper 26 topology-correlated Monte Carlo, stronger claim):
+        N = 2: F ~ 0.4   (matches P1 baseline at higher noise)
+        N = 4: F in [0.3, 0.4]   (tighter anti-bunching with scale)
+        N = 8: F in [0.25, 0.35]   (approaching the 4x4 sim prediction F ~ 0.285)
+        Scaling law: F(N) monotonically decreases with N at fixed tau.
+        This prediction is contingent on correlated-noise structure that
+        only hardware can test; Cirq's depolarizing model does not reproduce it.
+
+Falsification: F_paired(N) > 0.7 at any N >= 4, at 3 sigma.
 
 Compiled depth per Floquet cycle: 2 (Cirq optimiser merges consecutive
 single-qubit gates into one PhXZ per qubit).
