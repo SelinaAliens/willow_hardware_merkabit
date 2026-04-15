@@ -70,6 +70,19 @@ Run it yourself:
 python experiments/run_p4_scaling_cirq.py --sim-only --noisy --error-rate 0.005
 ```
 
+## Analysis
+
+The `analysis/` directory contains retrospective analysis of Google's
+publicly available Willow surface-code dataset (Acharya et al., Nature 2025):
+
+- `willow_fano_analysis.py` — Fano factor analysis of 420 Willow surface-code
+  experiments, giving F = 2.42 (super-Poissonian).
+
+This data does **not** falsify the pre-registered paired-phase predictions
+in this repository. The Willow public circuits are symmetric-phase (unpaired)
+stabiliser extraction — a different regime from the paired Floquet circuits
+proposed here. See `analysis/README.md` for the full explanation.
+
 ## Hardware Requirements
 
 - Any Google quantum processor with ≥ 2 qubits
